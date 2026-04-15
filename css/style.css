@@ -21,7 +21,7 @@ html, body {
 #splash {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,31 +30,23 @@ html, body {
 }
 
 .splash-text {
-  font-size: 2.2rem;
+  font-family: "Quicksand", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.85rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.01em;
   color: rgba(255, 255, 255, 0.96);
-  text-shadow:
-    0 0 20px rgba(255, 255, 255, 0.45),
-    0 0 42px rgba(255, 255, 255, 0.25),
-    0 0 84px rgba(255, 255, 255, 0.12);
-  animation: radiant 2.4s ease-in-out infinite;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  animation: radiant 3s ease-in-out infinite;
 }
 
 @keyframes radiant {
   0%, 100% {
-    opacity: 0.78;
-    text-shadow:
-      0 0 18px rgba(255, 255, 255, 0.35),
-      0 0 38px rgba(255, 255, 255, 0.18),
-      0 0 72px rgba(255, 255, 255, 0.08);
+    opacity: 0.85;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
   }
   50% {
     opacity: 1;
-    text-shadow:
-      0 0 24px rgba(255, 255, 255, 0.6),
-      0 0 52px rgba(255, 255, 255, 0.32),
-      0 0 100px rgba(255, 255, 255, 0.18);
+    text-shadow: 0 0 22px rgba(255, 255, 255, 0.4);
   }
 }
 
