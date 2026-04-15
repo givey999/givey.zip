@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>givey.zip</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <video id="background" autoplay muted loop playsinline></video>
+    <audio id="player-audio"></audio>
+
+    <div id="splash">
+      <span class="splash-text">click to join heaven</span>
+    </div>
+
+    <main id="app" hidden>
+      <section data-route="home">
+        <div class="profile-card">
+          <div class="banner"></div>
+          <img class="pfp" src="assets/pfp.jpg" alt="givey" />
+          <div class="name-row">
+            <span class="name">givey</span>
+            <span class="verified" aria-label="verified">✓</span>
+          </div>
+          <div class="bio"><span class="bio-text"></span><span class="cursor">|</span></div>
+          <div class="socials"></div>
+          <div class="view-counter">👁 <span class="view-count">0</span></div>
+        </div>
+
+        <div class="discord-card">
+          <div class="discord-user">
+            <span class="discord-dot"></span>
+            <span class="discord-handle">@givey</span>
+          </div>
+          <a class="discord-button" href="#" target="_blank" rel="noopener">Add on Discord</a>
+        </div>
+
+        <a class="projects-link" data-route-link="projects" href="/projects">see projects →</a>
+      </section>
+
+      <section data-route="projects" hidden>
+        <div class="projects-card">
+          <div class="projects-header">
+            <span class="projects-title">projects</span>
+            <a class="back-link" data-route-link="home" href="/">← back</a>
+          </div>
+          <div class="projects-list"></div>
+        </div>
+      </section>
+
+      <div class="music-player">
+        <div class="song-title"></div>
+        <div class="player-controls">
+          <button class="play-pause" aria-label="play/pause">▶</button>
+          <div class="progress-wrap">
+            <div class="progress-bar"></div>
+          </div>
+          <div class="time-display">0:00 / 0:00</div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="js/script.js"></script>
+  </body>
+</html>
