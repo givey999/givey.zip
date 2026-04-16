@@ -1,8 +1,12 @@
 const AMBIENT_COUNT = 10
 const SPARKLE_LIFE_MS = 1600
 const ANCHOR_PADDING = 60
-const CURSOR_SPAWN_EVERY_MS = 45
-const CURSOR_LIFE_MS = 650
+
+const CURSOR_LIFE_MS = 1100
+const CURSOR_BURST_MIN_GAP_MS = 32
+const CURSOR_BURST_COUNT = 2
+const CURSOR_IDLE_GAP_MS = 140
+const CURSOR_IDLE_THRESHOLD_MS = 90
 
 function randomPointInRect(rect) {
   return {
@@ -48,24 +52,30 @@ export function initSparkles(canvas, anchor, stack) {
   function spawnCursor(clientX, clientY) {
     particles.push({
       kind: 'cursor',
-      x: clientX * devicePixelRatio,
-      y: clientY * devicePixelRatio,
-      vx: (Math.random() - 0.5) * 1.4 * devicePixelRatio,
-      vy: (0.6 + Math.random() * 0.5) * devicePixelRatio,
+      x: (clientX + (Math.random() - 0.5) * 6) * devicePixelRatio,
+      y: (clientY + (Math.random() - 0.5) * 6) * devicePixelRatio,
+      vx: (Math.random() - 0.5) * 1.8 * devicePixelRatio,
+      vy: (0.35 + Math.random() * 0.75) * devicePixelRatio,
       life: 0,
-      ttl: CURSOR_LIFE_MS,
-      size: (1.2 + Math.random() * 0.9) * devicePixelRatio,
+      ttl: CURSOR_LIFE_MS + Math.random() * 400,
+      size: (1.4 + Math.random() * 1.1) * devicePixelRatio,
     })
   }
 
   for (let i = 0; i < AMBIENT_COUNT; i++) spawnAmbient()
 
-  let lastCursorSpawn = 0
+  let cursorX = null, cursorY = null
+  let lastMoveTime = 0
+  let lastBurstSpawn = 0
+  let lastIdleSpawn = 0
+
   window.addEventListener('mousemove', (e) => {
-    const now = performance.now()
-    if (now - lastCursorSpawn < CURSOR_SPAWN_EVERY_MS) return
-    lastCursorSpawn = now
-    spawnCursor(e.clientX, e.clientY)
+    cursorX = e.clientX
+    cursorY = e.clientY
+    lastMoveTime = performance.now()
+    if (lastMoveTime - lastBurstSpawn < CURSOR_BURST_MIN_GAP_MS) return
+    lastBurstSpawn = lastMoveTime
+    for (let i = 0; i < CURSOR_BURST_COUNT; i++) spawnCursor(cursorX, cursorY)
   })
 
   function drawSparkle(p, alpha) {
@@ -96,7 +106,14 @@ export function initSparkles(canvas, anchor, stack) {
     lastT = t
     ctx.clearRect(0, 0, w, h)
 
+    const now = performance.now()
     const ambientVisible = anchorVisible(anchor, stack)
+    const cursorKnown = cursorX !== null
+    const cursorIdle = cursorKnown && (now - lastMoveTime > CURSOR_IDLE_THRESHOLD_MS)
+    if (cursorIdle && now - lastIdleSpawn > CURSOR_IDLE_GAP_MS) {
+      lastIdleSpawn = now
+      spawnCursor(cursorX, cursorY)
+    }
 
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i]
