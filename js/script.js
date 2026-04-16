@@ -1,8 +1,9 @@
 import { pickRandom, themePaths } from './themes.js'
-import { SOCIALS, BIO_TEXT } from './config.js'
+import { SOCIALS, BIO_TEXT, DISCORD_ID } from './config.js'
 import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
 import { initPlayer } from './player.js'
+import { initDiscord } from './lanyard.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -36,6 +37,9 @@ function revealApp() {
 
   const playerHost = document.querySelector('.music-player')
   initPlayer(audio, { host: playerHost, title: theme.title })
+
+  const discordHost = document.querySelector('.discord-card')
+  initDiscord(discordHost, DISCORD_ID)
 }
 
 renderSocials()
