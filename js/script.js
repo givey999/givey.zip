@@ -56,9 +56,9 @@ function revealApp() {
   initDiscord(discordHost, DISCORD_ID)
 
   const stack = document.querySelector('.card-stack')
+  const tiltGroup = document.querySelector('.tilt-group')
   initFlip(stack)
-  initTilt(stack)
-  initTilt(document.querySelector('.music-player'))
+  initTilt(tiltGroup)
   initSparkles(document.querySelector('.sparkles'), document.querySelector('.name-row'), stack)
 }
 

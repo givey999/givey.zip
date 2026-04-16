@@ -19,36 +19,38 @@
     <audio id="player-audio" preload="auto"></audio>
 
     <main id="app" hidden>
-      <div class="card-stack">
-        <div class="face front">
-          <section class="profile-card">
-            <div class="banner" style="background-image: url('assets/banner.gif')"></div>
-            <img class="pfp" src="assets/pfp.jpg" alt="givey" />
-            <div class="name-row">
-              <span class="name">givey</span>
-            </div>
-            <div class="bio"><span class="bio-text"></span><span class="cursor">|</span></div>
-            <div class="socials"></div>
-            <a class="flip-link forward" data-flip-to="back" href="#projects">see projects →</a>
-          </section>
+      <div class="tilt-group">
+        <div class="card-stack">
+          <div class="face front">
+            <section class="profile-card">
+              <div class="banner" style="background-image: url('assets/banner.gif')"></div>
+              <img class="pfp" src="assets/pfp.jpg" alt="givey" />
+              <div class="name-row">
+                <span class="name">givey</span>
+              </div>
+              <div class="bio"><span class="bio-text"></span><span class="cursor">|</span></div>
+              <div class="socials"></div>
+              <a class="flip-link forward" data-flip-to="back" href="#projects">see projects →</a>
+            </section>
 
-          <section class="discord-card" data-state="loading">
-            <div class="discord-placeholder">loading…</div>
-          </section>
+            <section class="discord-card" data-state="loading">
+              <div class="discord-placeholder">loading…</div>
+            </section>
+          </div>
+
+          <div class="face back">
+            <section class="projects-card">
+              <header class="projects-header">
+                <span class="projects-title">projects</span>
+                <a class="flip-link back" data-flip-to="front" href="#">← back</a>
+              </header>
+              <div class="projects-list"></div>
+            </section>
+          </div>
         </div>
 
-        <div class="face back">
-          <section class="projects-card">
-            <header class="projects-header">
-              <span class="projects-title">projects</span>
-              <a class="flip-link back" data-flip-to="front" href="#">← back</a>
-            </header>
-            <div class="projects-list"></div>
-          </section>
-        </div>
+        <section class="music-player"></section>
       </div>
-
-      <section class="music-player"></section>
     </main>
 
     <div id="splash">
