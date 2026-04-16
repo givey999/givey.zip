@@ -58,7 +58,7 @@ function revealApp() {
   const stack = document.querySelector('.card-stack')
   initFlip(stack)
   initTilt(stack)
-  initSparkles(document.querySelector('.sparkles'))
+  initSparkles(document.querySelector('.sparkles'), document.querySelector('.name-row'), stack)
 }
 
 renderSocials()
