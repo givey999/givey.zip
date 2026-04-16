@@ -58,6 +58,7 @@ function revealApp() {
   const stack = document.querySelector('.card-stack')
   initFlip(stack)
   initTilt(stack)
+  initTilt(document.querySelector('.music-player'))
   initSparkles(document.querySelector('.sparkles'), document.querySelector('.name-row'), stack)
 }
 

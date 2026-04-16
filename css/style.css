@@ -63,6 +63,7 @@ body {
   opacity: 0;
   transition: opacity 500ms ease-out;
   z-index: 2;
+  perspective: 1400px;
 }
 
 #app.visible { opacity: 1; }
@@ -250,6 +251,7 @@ body {
   width: 100%;
   max-width: 420px;
   padding: 10px 14px;
+  transition: transform 120ms ease-out;
 }
 
 .song-title {
