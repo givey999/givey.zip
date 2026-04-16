@@ -453,3 +453,22 @@ html, body {
 /* ---- flip interaction ---- */
 
 .card-stack.is-flipping { pointer-events: none; }
+
+/* ---- responsive ---- */
+
+@media (max-width: 480px) {
+  .card-stack { max-width: calc(100% - 8px); }
+  .music-player { max-width: calc(100% - 8px); }
+
+  .profile-card .banner { height: 72px; }
+  .profile-card .pfp { width: 76px; height: 76px; margin-top: -38px; }
+  .name-row { font-size: 1.35rem; }
+
+  .splash-text { font-size: 1.5rem; }
+
+  .player-controls { gap: 8px; }
+  .time-display { min-width: 58px; font-size: 0.7rem; }
+
+  .discord-card { flex-wrap: wrap; }
+  .discord-button { margin-left: auto; }
+}
