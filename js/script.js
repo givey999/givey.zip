@@ -6,6 +6,8 @@ import { initPlayer } from './player.js'
 import { initDiscord } from './lanyard.js'
 import { projects } from './projects.js'
 import { initFlip } from './flip.js'
+import { initTilt } from './tilt.js'
+import { initSparkles } from './sparkles.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -55,6 +57,8 @@ function revealApp() {
 
   const stack = document.querySelector('.card-stack')
   initFlip(stack)
+  initTilt(stack)
+  initSparkles(document.querySelector('.sparkles'))
 }
 
 renderSocials()
