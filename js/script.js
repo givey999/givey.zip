@@ -8,6 +8,7 @@ import { projects } from './projects.js'
 import { initFlip } from './flip.js'
 import { initTilt } from './tilt.js'
 import { initSparkles } from './sparkles.js'
+import { initCursor } from './cursor.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -64,6 +65,7 @@ function revealApp() {
 
 renderSocials()
 renderProjects()
+initCursor(document.querySelector('.custom-cursor'))
 
 splash.addEventListener('click', async () => {
   try {

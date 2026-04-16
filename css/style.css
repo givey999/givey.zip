@@ -10,7 +10,25 @@
   --glow: 0 0 24px rgba(116, 0, 14, 0.55);
   --glow-strong: 0 0 36px rgba(116, 0, 14, 0.8);
   --font: "Mali", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --cursor-size: 48px;
 }
+
+*, *::before, *::after { cursor: none !important; }
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  pointer-events: none;
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+  will-change: transform;
+}
+
+.custom-cursor.visible { opacity: 1; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
