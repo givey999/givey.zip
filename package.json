@@ -7,5 +7,5 @@
     "dev": "npx --yes serve@latest -l 8080"
   },
   "author": "givey <afk.givey@gmail.com>",
-  "license": "UNLICENSED"
+  "license": "CC-BY-NC-4.0"
 }
