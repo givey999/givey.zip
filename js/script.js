@@ -1,4 +1,7 @@
 import { pickRandom, themePaths } from './themes.js'
+import { SOCIALS, BIO_TEXT } from './config.js'
+import { getIcon } from './icons.js'
+import { initTypewriter } from './typewriter.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -14,12 +17,24 @@ video.play().catch((err) => console.warn('background video autoplay blocked:', e
 audio.src = paths.audio
 audio.load()
 
+function renderSocials() {
+  const host = document.querySelector('.socials')
+  host.innerHTML = SOCIALS.map(
+    (s) => `<a href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.name}">${getIcon(s.name)}</a>`
+  ).join('')
+}
+
 function revealApp() {
   splash.classList.add('hidden')
   app.hidden = false
   requestAnimationFrame(() => app.classList.add('visible'))
   splash.addEventListener('transitionend', () => { splash.style.display = 'none' }, { once: true })
+
+  const bioEl = document.querySelector('.bio-text')
+  initTypewriter(bioEl, BIO_TEXT)
 }
+
+renderSocials()
 
 splash.addEventListener('click', async () => {
   try {
@@ -31,5 +46,4 @@ splash.addEventListener('click', async () => {
   revealApp()
 }, { once: false })
 
-// Expose the chosen theme for later modules (player, etc.)
 window.__givey = { theme }
