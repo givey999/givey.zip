@@ -385,3 +385,71 @@ html, body {
   border-color: var(--accent);
   box-shadow: 0 0 12px rgba(116, 0, 14, 0.7);
 }
+
+/* ---- projects card ---- */
+
+.projects-card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+  min-height: 160px;
+}
+
+.projects-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 10px;
+}
+
+.projects-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.projects-list::-webkit-scrollbar { width: 4px; }
+.projects-list::-webkit-scrollbar-thumb { background: rgba(116, 0, 14, 0.5); border-radius: 2px; }
+
+.project-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  color: var(--fg);
+  text-decoration: none;
+  transition: background 200ms, border-color 200ms, box-shadow 200ms;
+}
+
+.project-tile:hover {
+  background: rgba(116, 0, 14, 0.25);
+  border-color: rgba(116, 0, 14, 0.6);
+  box-shadow: 0 0 12px rgba(116, 0, 14, 0.5);
+}
+
+.project-tile-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.project-tile-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.35;
+}
+
+/* ---- flip interaction ---- */
+
+.card-stack.is-flipping { pointer-events: none; }

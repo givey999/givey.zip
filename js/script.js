@@ -4,6 +4,8 @@ import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
 import { initPlayer } from './player.js'
 import { initDiscord } from './lanyard.js'
+import { projects } from './projects.js'
+import { initFlip } from './flip.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -26,6 +28,16 @@ function renderSocials() {
   ).join('')
 }
 
+function renderProjects() {
+  const host = document.querySelector('.projects-list')
+  host.innerHTML = projects.map((p) => `
+    <a class="project-tile" href="${p.url}" target="_blank" rel="noopener noreferrer">
+      <span class="project-tile-title">${p.title}</span>
+      <span class="project-tile-desc">${p.description}</span>
+    </a>
+  `).join('')
+}
+
 function revealApp() {
   splash.classList.add('hidden')
   app.hidden = false
@@ -40,9 +52,13 @@ function revealApp() {
 
   const discordHost = document.querySelector('.discord-card')
   initDiscord(discordHost, DISCORD_ID)
+
+  const stack = document.querySelector('.card-stack')
+  initFlip(stack)
 }
 
 renderSocials()
+renderProjects()
 
 splash.addEventListener('click', async () => {
   try {
