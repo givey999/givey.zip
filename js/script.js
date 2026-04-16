@@ -2,6 +2,7 @@ import { pickRandom, themePaths } from './themes.js'
 import { SOCIALS, BIO_TEXT } from './config.js'
 import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
+import { initPlayer } from './player.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -32,6 +33,9 @@ function revealApp() {
 
   const bioEl = document.querySelector('.bio-text')
   initTypewriter(bioEl, BIO_TEXT)
+
+  const playerHost = document.querySelector('.music-player')
+  initPlayer(audio, { host: playerHost, title: theme.title })
 }
 
 renderSocials()
