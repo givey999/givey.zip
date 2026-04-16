@@ -1,22 +1,75 @@
+:root {
+  --bg: #101013;
+  --accent: #74000e;
+  --fg: #ffffff;
+  --card-bg: rgba(0, 0, 0, 0.6);
+  --card-blur: 10px;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --border-width: 2px;
+  --border-radius: 0.3rem;
+  --glow: 0 0 24px rgba(116, 0, 14, 0.55);
+  --glow-strong: 0 0 36px rgba(116, 0, 14, 0.8);
+  --font: "Mali", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   width: 100%;
   height: 100%;
-  background: #000;
-  color: #fff;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 }
 
+::selection { background: var(--bg); color: var(--accent); }
+
 #background {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: -1;
+  z-index: -10;
 }
+
+.background-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -5;
+  pointer-events: none;
+}
+
+.sparkles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 500ms ease-out;
+  z-index: 2;
+}
+
+#app.visible { opacity: 1; }
+#app[hidden] { display: none; }
+
+/* ---- splash ---- */
 
 #splash {
   position: fixed;
@@ -27,35 +80,73 @@ html, body {
   justify-content: center;
   z-index: 100;
   cursor: pointer;
+  transition: opacity 400ms ease-out;
 }
+
+#splash.hidden { opacity: 0; pointer-events: none; }
 
 .splash-text {
-  font-family: "Quicksand", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1.85rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.96);
-  text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
-  animation: radiant 3s ease-in-out infinite;
+  font-family: var(--font);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--fg);
+  text-shadow: 0 0 18px rgba(116, 0, 14, 0.55);
+  animation: splash-pulse 3s ease-in-out infinite;
+  text-align: center;
+  padding: 0 24px;
 }
 
-@keyframes radiant {
-  0%, 100% {
-    opacity: 0.85;
-    text-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 0 0 22px rgba(255, 255, 255, 0.4);
-  }
+@keyframes splash-pulse {
+  0%, 100% { opacity: 0.85; text-shadow: 0 0 14px rgba(116, 0, 14, 0.4); }
+  50%      { opacity: 1;    text-shadow: 0 0 28px rgba(116, 0, 14, 0.75); }
 }
 
-#app {
-  position: fixed;
-  inset: 0;
+/* ---- card-stack and faces (3D flip) ---- */
+
+.card-stack {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease-in-out;
+}
+
+.card-stack.flipped { transform: rotateY(180deg); }
+
+.face {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 10px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.face.back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+
+/* ---- card base style (shared) ---- */
+
+.profile-card,
+.discord-card,
+.projects-card,
+.music-player {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+  border: var(--border-width) solid var(--card-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--glow);
+  color: var(--fg);
+  transition: box-shadow 300ms ease-out;
+}
+
+.profile-card:hover,
+.discord-card:hover,
+.projects-card:hover,
+.music-player:hover {
+  box-shadow: var(--glow-strong);
 }
