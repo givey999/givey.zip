@@ -1,4 +1,5 @@
 reference/extracted/
+reference/*.zip
 node_modules/
 .DS_Store
 *.log

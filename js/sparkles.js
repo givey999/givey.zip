@@ -1,6 +1,6 @@
-const AMBIENT_COUNT = 10
+const AMBIENT_COUNT = 30
 const SPARKLE_LIFE_MS = 1600
-const ANCHOR_PADDING = 60
+const ANCHOR_PADDING = 30
 
 const CURSOR_LIFE_MS = 1100
 const CURSOR_BURST_MIN_GAP_MS = 32
@@ -42,7 +42,7 @@ export function initSparkles(canvas, anchor, stack) {
       kind: 'ambient',
       x, y,
       vx: (Math.random() - 0.5) * 0.12 * devicePixelRatio,
-      vy: (-0.25 + (Math.random() - 0.5) * 0.25) * devicePixelRatio,
+      vy: (-0.45 + (Math.random() - 0.5) * 0.2) * devicePixelRatio,
       life: 0,
       ttl: SPARKLE_LIFE_MS + Math.random() * 900,
       size: (1.5 + Math.random() * 1.3) * devicePixelRatio,

@@ -1,4 +1,5 @@
 import { pickRandom, themePaths } from './themes.js'
+import { pickRandom as pickPfp, pfpPaths } from './pfps.js'
 import { SOCIALS, BIO_TEXT, DISCORD_ID, CRYPTO } from './config.js'
 import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
@@ -9,6 +10,8 @@ import { initFlip } from './flip.js'
 import { initTilt } from './tilt.js'
 import { initSparkles } from './sparkles.js'
 import { initCursor } from './cursor.js'
+import { initViews } from './views.js'
+import { glitchText } from './glitch.js'
 
 const video = document.getElementById('background')
 const audio = document.getElementById('player-audio')
@@ -23,6 +26,13 @@ video.play().catch((err) => console.warn('background video autoplay blocked:', e
 
 audio.src = paths.audio
 audio.load()
+
+const pfpPair = pickPfp()
+const pfpAssets = pfpPaths(pfpPair)
+const pfpImg = document.querySelector('.pfp')
+const bannerEl = document.querySelector('.banner')
+pfpImg.src = pfpAssets.pfp
+bannerEl.style.backgroundImage = `url('${pfpAssets.banner}')`
 
 function renderSocials() {
   const host = document.querySelector('.socials')
@@ -82,13 +92,15 @@ function revealApp() {
   const tiltGroup = document.querySelector('.tilt-group')
   initFlip(stack)
   initTilt(tiltGroup)
-  initSparkles(document.querySelector('.sparkles'), document.querySelector('.name-row'), stack)
+  initSparkles(document.querySelector('.sparkles'), tiltGroup, stack)
 }
 
 renderSocials()
 renderProjects()
 renderCrypto()
 initCursor(document.querySelector('.custom-cursor'))
+initViews(document.querySelector('.views-count'))
+glitchText(document.querySelector('.splash-text'), 'click to join heaven', 1400)
 
 splash.addEventListener('click', async () => {
   try {

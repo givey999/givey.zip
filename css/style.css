@@ -13,7 +13,13 @@
   --cursor-size: 48px;
 }
 
-*, *::before, *::after { cursor: none !important; }
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor { display: none !important; }
+}
 
 .custom-cursor {
   position: fixed;
@@ -193,6 +199,7 @@ body {
   align-items: center;
   padding: 0 0 16px;
   overflow: hidden;
+  position: relative;
 }
 
 .profile-card .banner {
@@ -218,9 +225,31 @@ body {
   align-items: center;
   gap: 6px;
   margin-top: 10px;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  text-shadow: 0 0 12px rgba(116, 0, 14, 0.7);
+}
+
+.verified {
+  width: 22px;
+  height: 22px;
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(116, 0, 14, 0.75));
+  flex-shrink: 0;
+}
+
+.name {
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow:
+    0 1px 0 rgba(116, 0, 14, 0.95),
+    0 2px 0 rgba(116, 0, 14, 0.85),
+    0 3px 0 rgba(116, 0, 14, 0.72),
+    0 4px 0 rgba(116, 0, 14, 0.58),
+    0 5px 0 rgba(116, 0, 14, 0.45),
+    0 6px 0 rgba(116, 0, 14, 0.32),
+    0 7px 0 rgba(116, 0, 14, 0.2),
+    0 10px 18px rgba(116, 0, 14, 0.85),
+    0 0 24px rgba(116, 0, 14, 0.5);
 }
 
 .bio {
@@ -237,6 +266,36 @@ body {
 }
 
 @keyframes blink { 50% { opacity: 0; } }
+
+.views {
+  position: absolute;
+  top: 124px;
+  left: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-variant-numeric: tabular-nums;
+}
+
+.views-icon {
+  width: 13px;
+  height: 13px;
+  color: rgba(116, 0, 14, 0.9);
+  filter: drop-shadow(0 0 6px rgba(116, 0, 14, 0.6));
+}
+
+.views-count {
+  letter-spacing: 0.3px;
+}
 
 .socials {
   display: flex;
@@ -333,6 +392,12 @@ body {
 .player-controls button:hover {
   background: rgba(116, 0, 14, 0.35);
   box-shadow: 0 0 12px rgba(116, 0, 14, 0.6);
+}
+
+.player-controls button svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .progress-wrap {
@@ -603,6 +668,7 @@ body {
   .profile-card .banner { height: 72px; }
   .profile-card .pfp { width: 76px; height: 76px; margin-top: -38px; }
   .name-row { font-size: 1.35rem; }
+  .views { top: 78px; left: 10px; font-size: 0.7rem; padding: 3px 8px; }
 
   .splash-text { font-size: 1.5rem; }
 

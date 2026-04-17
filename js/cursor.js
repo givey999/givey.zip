@@ -1,4 +1,9 @@
 export function initCursor(img) {
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    img.remove()
+    return
+  }
+
   let visible = false
 
   function show() {
