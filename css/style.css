@@ -143,7 +143,8 @@ body {
   transition: transform 0.7s ease-in-out;
 }
 
-.card-stack.flipped { transform: rotateY(180deg); }
+.card-stack.flipped-projects { transform: rotateY(180deg); }
+.card-stack.flipped-crypto   { transform: rotateY(-180deg); }
 
 .face {
   display: flex;
@@ -164,6 +165,7 @@ body {
 .profile-card,
 .discord-card,
 .projects-card,
+.crypto-card,
 .music-player {
   background: var(--card-bg);
   backdrop-filter: blur(var(--card-blur));
@@ -178,6 +180,7 @@ body {
 .profile-card:hover,
 .discord-card:hover,
 .projects-card:hover,
+.crypto-card:hover,
 .music-player:hover {
   box-shadow: var(--glow-strong);
 }
@@ -264,16 +267,32 @@ body {
   height: 18px;
 }
 
-.flip-link {
+.flip-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 16px;
   margin-top: 14px;
+}
+
+.flip-link {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
   transition: color 200ms;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .flip-link:hover { color: var(--accent); }
+
+.flip-icon {
+  width: 14px;
+  height: 14px;
+}
 
 /* ---- music player ---- */
 
@@ -481,9 +500,99 @@ body {
   line-height: 1.35;
 }
 
+/* ---- crypto card ---- */
+
+.crypto-card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+  min-height: 160px;
+}
+
+.crypto-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 10px;
+}
+
+.crypto-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.crypto-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.crypto-list::-webkit-scrollbar { width: 4px; }
+.crypto-list::-webkit-scrollbar-thumb { background: rgba(116, 0, 14, 0.5); border-radius: 2px; }
+
+.crypto-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  transition: background 200ms, border-color 200ms, box-shadow 200ms;
+}
+
+.crypto-tile:hover {
+  background: rgba(116, 0, 14, 0.25);
+  border-color: rgba(116, 0, 14, 0.6);
+  box-shadow: 0 0 12px rgba(116, 0, 14, 0.5);
+}
+
+.crypto-tile-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.crypto-tile-symbol {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+}
+
+.crypto-tile-address {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: monospace;
+  word-break: break-all;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: color 200ms;
+}
+
+.crypto-tile-address:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.crypto-tile-copied {
+  font-size: 0.7rem;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.crypto-tile-copied.show { opacity: 1; }
+
 /* ---- flip interaction ---- */
 
 .card-stack.is-flipping { pointer-events: none; }
+.projects-card[hidden],
+.crypto-card[hidden] { display: none !important; }
 
 /* ---- responsive ---- */
 

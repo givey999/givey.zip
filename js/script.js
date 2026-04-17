@@ -1,5 +1,5 @@
 import { pickRandom, themePaths } from './themes.js'
-import { SOCIALS, BIO_TEXT, DISCORD_ID } from './config.js'
+import { SOCIALS, BIO_TEXT, DISCORD_ID, CRYPTO } from './config.js'
 import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
 import { initPlayer } from './player.js'
@@ -41,6 +41,28 @@ function renderProjects() {
   `).join('')
 }
 
+function renderCrypto() {
+  const host = document.querySelector('.crypto-list')
+  host.innerHTML = CRYPTO.map((c) => `
+    <div class="crypto-tile" data-address="${c.address}">
+      <span class="crypto-tile-name">${c.name} <span class="crypto-tile-symbol">${c.symbol}</span></span>
+      <span class="crypto-tile-address">${c.address}</span>
+      <span class="crypto-tile-copied">copied!</span>
+    </div>
+  `).join('')
+
+  host.addEventListener('click', (e) => {
+    const tile = e.target.closest('.crypto-tile')
+    if (!tile) return
+    const addr = tile.dataset.address
+    navigator.clipboard.writeText(addr).then(() => {
+      const label = tile.querySelector('.crypto-tile-copied')
+      label.classList.add('show')
+      setTimeout(() => label.classList.remove('show'), 1200)
+    })
+  })
+}
+
 function revealApp() {
   splash.classList.add('hidden')
   app.hidden = false
@@ -65,6 +87,7 @@ function revealApp() {
 
 renderSocials()
 renderProjects()
+renderCrypto()
 initCursor(document.querySelector('.custom-cursor'))
 
 splash.addEventListener('click', async () => {

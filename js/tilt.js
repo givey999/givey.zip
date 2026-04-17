@@ -11,7 +11,9 @@ export function initTilt(stack) {
     const y = e.clientY - (rect.top + rect.height / 2)
     const rotY = clamp((x / (rect.width / 2)) * MAX_DEG, -MAX_DEG, MAX_DEG)
     const rotX = clamp(-(y / (rect.height / 2)) * MAX_DEG, -MAX_DEG, MAX_DEG)
-    const base = stack.classList.contains('flipped') ? 'rotateY(180deg) ' : ''
+    let base = ''
+    if (stack.classList.contains('flipped-projects')) base = 'rotateY(180deg) '
+    else if (stack.classList.contains('flipped-crypto')) base = 'rotateY(-180deg) '
     stack.style.transform = `${base}rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`
   }
 
