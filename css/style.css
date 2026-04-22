@@ -166,6 +166,18 @@ body {
   transform: rotateY(180deg);
 }
 
+/* iOS Safari breaks backface-visibility when descendants use backdrop-filter,
+   so also swap visibility at the 90° midpoint of the 700ms flip.
+   Delay lives on the base rule so it applies in both directions. */
+.face.front { visibility: visible; transition: visibility 0s 350ms; }
+.face.back  { visibility: hidden;  transition: visibility 0s 350ms; }
+
+.card-stack.flipped-projects .face.front,
+.card-stack.flipped-crypto   .face.front { visibility: hidden; }
+
+.card-stack.flipped-projects .face.back,
+.card-stack.flipped-crypto   .face.back  { visibility: visible; }
+
 /* ---- card base style (shared) ---- */
 
 .profile-card,
