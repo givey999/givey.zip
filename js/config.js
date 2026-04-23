@@ -13,7 +13,10 @@ export const BIO_TEXT = 'wanna be web developer'
 
 // Edit these paragraphs to change the "about" panel on the card back.
 export const ABOUT = [
-  "hey, i'm givey. from romania.",
-  "i make things online — apps, websites, small tools for problems i happen to have. usually i'm the first user.",
+  "hey, i'm givey.",
+  "i'm from romania. i've been online since around the time i learned to read, which is probably why my brain works the way it does.",
+  "i make things — apps, websites, small tools for problems i happen to have. usually i'm the first user, sometimes the only one. that's fine.",
+  "i care more about how something feels than what it looks like on paper. a button that responds instantly instead of slowly will make my day.",
   "when i'm not making something i'm either in minecraft or defending my keyboard from a cat.",
+  "i don't take myself that seriously. if this whole page feels like someone doing too much — you're probably right.",
 ]
