@@ -540,7 +540,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 260px;
+  max-height: 440px;
   overflow-y: auto;
 }
 
