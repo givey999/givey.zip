@@ -611,6 +611,15 @@ body {
   color: rgba(255, 255, 255, 0.85);
 }
 
+.about-quote {
+  margin: 4px 0 2px;
+  font-size: 0.95rem;
+  font-style: italic;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 6px 0;
+}
+
 /* ---- flip interaction ---- */
 
 .card-stack.is-flipping { pointer-events: none; }

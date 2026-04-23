@@ -53,7 +53,14 @@ function renderProjects() {
 
 function renderAbout() {
   const host = document.querySelector('.about-body')
-  host.innerHTML = ABOUT.map((p) => `<p class="about-para">${p}</p>`).join('')
+  host.innerHTML = ABOUT.map((p) => {
+    // A paragraph wrapped in straight double quotes renders as a centered,
+    // italic epigraph-style quote instead of a plain paragraph.
+    if (p.startsWith('"') && p.endsWith('"')) {
+      return `<p class="about-quote">${p}</p>`
+    }
+    return `<p class="about-para">${p}</p>`
+  }).join('')
 }
 
 function revealApp() {
