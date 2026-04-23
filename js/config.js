@@ -11,8 +11,9 @@ export const DISCORD_ID = '934479569539444786'
 
 export const BIO_TEXT = 'wanna be web developer'
 
-export const CRYPTO = [
-  { symbol: 'BTC', name: 'Bitcoin',  address: 'bc1qmewwx8u99x5vy58rypvrn70vn7u629rsss3vtz' },
-  { symbol: 'ETH', name: 'Ethereum', address: '0xf6eE54ae2Cb88C565c3940c9F0b4b273B5416FBA' },
-  { symbol: 'LTC', name: 'Litecoin', address: 'LXjaENbU9TKkdQ5sChJqBVJqpeeh6Wdz1X' },
+// Edit these paragraphs to change the "about" panel on the card back.
+export const ABOUT = [
+  "hey — i'm givey.",
+  "i build things on the web, mostly in typescript + node. currently obsessed with dst; previously shipped donuttrade. this site is my excuse to practice css animations.",
+  "based in romania. find me on the socials on the front.",
 ]

@@ -146,11 +146,11 @@ body {
   max-width: 420px;
   perspective: 1600px;
   transform-style: preserve-3d;
-  transition: transform 0.7s ease-in-out;
+  transition: transform 0.7s ease-in-out, height 0.5s ease-in-out;
 }
 
 .card-stack.flipped-projects { transform: rotateY(180deg); }
-.card-stack.flipped-crypto   { transform: rotateY(-180deg); }
+.card-stack.flipped-about    { transform: rotateY(-180deg); }
 
 .face {
   display: flex;
@@ -173,17 +173,17 @@ body {
 .face.back  { visibility: hidden;  transition: visibility 0s 350ms; }
 
 .card-stack.flipped-projects .face.front,
-.card-stack.flipped-crypto   .face.front { visibility: hidden; }
+.card-stack.flipped-about    .face.front { visibility: hidden; }
 
 .card-stack.flipped-projects .face.back,
-.card-stack.flipped-crypto   .face.back  { visibility: visible; }
+.card-stack.flipped-about    .face.back  { visibility: visible; }
 
 /* ---- card base style (shared) ---- */
 
 .profile-card,
 .discord-card,
 .projects-card,
-.crypto-card,
+.about-card,
 .music-player {
   background: var(--card-bg);
   backdrop-filter: blur(var(--card-blur));
@@ -198,7 +198,7 @@ body {
 .profile-card:hover,
 .discord-card:hover,
 .projects-card:hover,
-.crypto-card:hover,
+.about-card:hover,
 .music-player:hover {
   box-shadow: var(--glow-strong);
 }
@@ -519,7 +519,6 @@ body {
   display: flex;
   flex-direction: column;
   padding: 14px 16px;
-  min-height: 160px;
 }
 
 .projects-header {
@@ -577,16 +576,15 @@ body {
   line-height: 1.35;
 }
 
-/* ---- crypto card ---- */
+/* ---- about card ---- */
 
-.crypto-card {
+.about-card {
   display: flex;
   flex-direction: column;
   padding: 14px 16px;
-  min-height: 160px;
 }
 
-.crypto-header {
+.about-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -595,81 +593,29 @@ body {
   margin-bottom: 10px;
 }
 
-.crypto-title {
+.about-title {
   font-weight: 700;
   font-size: 1.05rem;
 }
 
-.crypto-list {
+.about-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-height: 260px;
-  overflow-y: auto;
+  gap: 10px;
 }
 
-.crypto-list::-webkit-scrollbar { width: 4px; }
-.crypto-list::-webkit-scrollbar-thumb { background: rgba(116, 0, 14, 0.5); border-radius: 2px; }
-
-.crypto-tile {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 4px;
-  transition: background 200ms, border-color 200ms, box-shadow 200ms;
-}
-
-.crypto-tile:hover {
-  background: rgba(116, 0, 14, 0.25);
-  border-color: rgba(116, 0, 14, 0.6);
-  box-shadow: 0 0 12px rgba(116, 0, 14, 0.5);
-}
-
-.crypto-tile-name {
-  font-weight: 700;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.crypto-tile-symbol {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.45);
-  font-weight: 400;
-}
-
-.crypto-tile-address {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.55);
-  font-family: monospace;
-  word-break: break-all;
-  line-height: 1.35;
-  cursor: pointer;
-  transition: color 200ms;
-}
-
-.crypto-tile-address:hover {
+.about-para {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.85);
 }
-
-.crypto-tile-copied {
-  font-size: 0.7rem;
-  color: var(--accent);
-  opacity: 0;
-  transition: opacity 200ms;
-}
-
-.crypto-tile-copied.show { opacity: 1; }
 
 /* ---- flip interaction ---- */
 
 .card-stack.is-flipping { pointer-events: none; }
 .projects-card[hidden],
-.crypto-card[hidden] { display: none !important; }
+.about-card[hidden] { display: none !important; }
 
 /* ---- responsive ---- */
 

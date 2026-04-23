@@ -17,7 +17,7 @@ function randomPointInRect(rect) {
 
 function anchorVisible(anchor, stack) {
   if (!anchor.offsetParent && anchor.offsetWidth === 0 && anchor.offsetHeight === 0) return false
-  if (stack?.classList.contains('flipped-projects') || stack?.classList.contains('flipped-crypto')) return false
+  if (stack?.classList.contains('flipped-projects') || stack?.classList.contains('flipped-about')) return false
   return true
 }
 
