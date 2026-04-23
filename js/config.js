@@ -15,7 +15,5 @@ export const BIO_TEXT = 'wanna be web developer'
 export const ABOUT = [
   "hey, i'm givey. from romania.",
   "i make things online — apps, websites, small tools for problems i happen to have. usually i'm the first user.",
-  "right now i'm building dst, a little app that lets you keep your files private, encrypted, and out of the way. before that was donuttrade, a safe way for people on a minecraft server to trade without getting scammed. and before that, this site — part homepage, part me messing around with animations.",
   "when i'm not making something i'm either in minecraft or defending my keyboard from a cat.",
-  "socials on the front. i answer faster on discord.",
 ]
