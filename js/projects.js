@@ -7,6 +7,13 @@ export const projects = [
     thumbnail: null,
   },
   {
+    id: 'omu',
+    title: 'omu.givey.zip',
+    description: 'Polite username availability scanner. Personal-use Python CLI, closed access — dm on discord for a copy.',
+    url: 'https://omu.givey.zip',
+    thumbnail: null,
+  },
+  {
     id: 'donuttrade',
     title: 'donuttrade.com',
     description: 'Minecraft trading platform. TypeScript, Next.js, Fastify, Docker, PostgreSQL.',
