@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>givey · portfolio</title>
+    <link rel="icon" type="image/jpeg" href="../assets/icon.jpg" />
+    <link rel="apple-touch-icon" href="../assets/icon.jpg" />
+    <meta name="description" content="projects by givey" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" />
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --fg: #e6e6e6;
+        --muted: #8a8a8a;
+        --rule: #1f1f1f;
+        --accent: #ff5468;
+        --pill-bg: #161616;
+        --pill-border: #242424;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      html { background: var(--bg); }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ::selection { background: var(--accent); color: var(--bg); }
+
+      a { color: var(--fg); text-decoration: none; }
+      a:hover { color: var(--accent); }
+
+      .page {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 64px 24px 96px;
+      }
+
+      header.top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--rule);
+        margin-bottom: 40px;
+      }
+
+      .brand {
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0.02em;
+      }
+      .brand .slash { color: var(--muted); margin: 0 6px; }
+      .brand .label { color: var(--muted); font-weight: 400; }
+
+      .nav-back {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .nav-back:hover { color: var(--accent); }
+
+      .intro {
+        color: var(--muted);
+        margin-bottom: 56px;
+      }
+      .intro p + p { margin-top: 8px; }
+
+      .projects { display: flex; flex-direction: column; gap: 56px; }
+
+      .project { }
+      .project-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0 0 4px;
+        letter-spacing: -0.005em;
+      }
+      .project-title .index {
+        color: var(--muted);
+        font-weight: 400;
+        margin-right: 10px;
+      }
+      .project-host {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+      .project-host a:hover { color: var(--accent); }
+
+      .project-details {
+        color: var(--fg);
+        margin-bottom: 16px;
+      }
+
+      .tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .tech span {
+        font-size: 11px;
+        line-height: 1;
+        padding: 6px 10px;
+        background: var(--pill-bg);
+        border: 1px solid var(--pill-border);
+        border-radius: 999px;
+        color: var(--muted);
+      }
+
+      .links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; }
+      .links a {
+        color: var(--muted);
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 2px;
+        transition: color 120ms ease, border-color 120ms ease;
+      }
+      .links a:hover { color: var(--accent); border-color: var(--accent); }
+      .links .private {
+        color: #555;
+        border-bottom: 1px dashed var(--rule);
+        padding-bottom: 2px;
+        cursor: default;
+      }
+
+      footer.bottom {
+        margin-top: 72px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      footer.bottom a { color: var(--muted); }
+      footer.bottom a:hover { color: var(--accent); }
+
+      @media (max-width: 480px) {
+        .page { padding: 40px 20px 64px; }
+        header.top { flex-direction: column; align-items: flex-start; gap: 8px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="top">
+        <div class="brand">
+          givey<span class="slash">/</span><span class="label">portfolio</span>
+        </div>
+        <a class="nav-back" href="/">← givey.zip</a>
+      </header>
+
+      <section class="intro">
+        <p>things i've built. mostly to solve a problem i had myself.</p>
+      </section>
+
+      <main class="projects" id="projects"></main>
+
+      <footer class="bottom">
+        <span>© <span id="year"></span> givey</span>
+        <a href="https://github.com/givey999" target="_blank" rel="noopener noreferrer">github.com/givey999</a>
+      </footer>
+    </div>
+
+    <script type="module">
+      import { projects } from '../js/projects.js'
+
+      const host = document.getElementById('projects')
+
+      const escape = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+      }[c]))
+
+      host.innerHTML = projects.map((p, i) => {
+        const idx = String(i + 1).padStart(2, '0')
+        const host = p.url ? new URL(p.url).host : ''
+        const techPills = (p.tech || [])
+          .map((t) => `<span>${escape(t)}</span>`)
+          .join('')
+        const liveLink = p.url
+          ? `<a href="${escape(p.url)}" target="_blank" rel="noopener noreferrer">live ↗</a>`
+          : ''
+        const ghLink = p.github
+          ? `<a href="${escape(p.github)}" target="_blank" rel="noopener noreferrer">github ↗</a>`
+          : `<span class="private" title="source not public">private repo</span>`
+        return `
+          <article class="project">
+            <h2 class="project-title"><span class="index">${idx}</span>${escape(p.name || p.title)}</h2>
+            ${host ? `<div class="project-host"><a href="${escape(p.url)}" target="_blank" rel="noopener noreferrer">${escape(host)}</a></div>` : ''}
+            <p class="project-details">${escape(p.details || p.description || '')}</p>
+            ${techPills ? `<div class="tech">${techPills}</div>` : ''}
+            <div class="links">${liveLink}${ghLink}</div>
+          </article>
+        `
+      }).join('')
+
+      document.getElementById('year').textContent = new Date().getFullYear()
+    </script>
+  </body>
+</html>
