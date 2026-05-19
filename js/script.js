@@ -43,12 +43,14 @@ function renderSocials() {
 
 function renderProjects() {
   const host = document.querySelector('.projects-list')
-  const tiles = projects.map((p) => `
-    <a class="project-tile" href="${p.url}" target="_blank" rel="noopener noreferrer">
-      <span class="project-tile-title">${p.title}</span>
-      <span class="project-tile-desc">${p.description}</span>
-    </a>
-  `).join('')
+  const tiles = projects
+    .filter((p) => p.id !== 'givey-zip')
+    .map((p) => `
+      <a class="project-tile" href="${p.url}" target="_blank" rel="noopener noreferrer">
+        <span class="project-tile-title">${p.title}</span>
+        <span class="project-tile-desc">${p.description}</span>
+      </a>
+    `).join('')
   const seeMore = `
     <a class="project-tile" href="/portfolio/">
       <span class="project-tile-title">see more →</span>
