@@ -1,8 +1,18 @@
-# Hosting setup: givey.zip on the donuttrade droplet
+# Hosting setup: givey.zip
 
-givey.zip is static and lives on the same DigitalOcean droplet as donuttrade,
-served by the existing Caddy container. Setup is three one-time changes on the
-donuttrade side + a recurring deploy via rsync from this repo.
+givey.zip is static and lives on a single DigitalOcean droplet, served by
+**Caddy running natively** (a systemd service — *not* Docker). The same Caddy
+also serves `dst.givey.zip` and `omu.givey.zip` from sibling site blocks.
+
+> Historical note: this droplet used to also run **donuttrade** via a Docker
+> stack, and earlier versions of this doc described editing donuttrade's
+> `Caddyfile.production` + a compose bind-mount. donuttrade has since been
+> decommissioned and Docker removed. Caddy now runs natively and its config is
+> the plain file `/etc/caddy/Caddyfile` on the droplet (it is **not** checked
+> into any repo). Edit that file directly.
+
+Setup is a few one-time changes on the droplet + a recurring deploy via rsync
+from this repo.
 
 ## 1. DNS
 
@@ -20,17 +30,34 @@ sudo mkdir -p /srv/givey
 sudo chown <your-user>:<your-user> /srv/givey
 ```
 
-## 3. Caddy site block (in the donuttrade repo, `R:\donuttrade`)
+## 3. Caddy site block
 
-Append to `Caddyfile.production`:
+Edit `/etc/caddy/Caddyfile` on the droplet and add the givey blocks (alongside
+the existing `dst.givey.zip` / `omu.givey.zip` blocks):
 
 ```caddy
-givey.zip, www.givey.zip {
+www.givey.zip {
+    redir https://givey.zip{uri} permanent
+}
+
+givey.zip {
     root * /srv/givey
+
+    # JS/CSS change content but keep the same filename (no build step, no
+    # content hashing). Without an explicit directive browsers fall back to
+    # heuristic caching and serve stale modules — mobile Safari especially —
+    # which is how an old script.js once kept rendering the pre-"see more"
+    # projects list on phones. "no-cache" = cache but always revalidate via
+    # ETag, so a tiny conditional request returns 304 when unchanged and picks
+    # up real changes immediately. (Named matcher, same style as @media below —
+    # an inline `/*.html`-style matcher does NOT match the bare `/` homepage.)
+    @nocache path *.js *.css
+    header @nocache Cache-Control "no-cache"
+
     file_server
     encode gzip
 
-    @media path *.mp4 *.mp3 *.weba *.webm *.jpg *.jpeg *.png *.gif *.webp *.svg
+    @media path *.mp3 *.mp4 *.weba *.webm *.jpg *.jpeg *.png *.gif *.webp *.svg *.ico
     header @media Cache-Control "public, max-age=2592000, immutable"
     header /*.html Cache-Control "public, max-age=60"
 
@@ -43,29 +70,22 @@ givey.zip, www.givey.zip {
 
 Caddy auto-provisions a Let's Encrypt cert for `givey.zip` on first request.
 
-## 4. Bind-mount in donuttrade's compose file
+> Known minor gap: `header /*.html` only matches paths ending in `.html`, so the
+> bare `/` homepage gets no `Cache-Control` and is cached heuristically. Low
+> impact (index.html rarely changes and self-heals). To close it fully, add a
+> named matcher: `@html path / *.html` and apply the 60s header to `@html`.
 
-In `docker-compose.production.yml`, add one line under `caddy.volumes`:
+## 4. Apply on the droplet
 
-```yaml
-  caddy:
-    volumes:
-      - ./Caddyfile.production:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-      - /srv/givey:/srv/givey:ro    # ← new
-```
-
-## 5. Apply on the droplet
+Validate first (so a malformed edit can't take the site down), then reload
+with zero downtime:
 
 ```bash
-cd /path/to/donuttrade
-docker compose -f docker-compose.yml -f docker-compose.production.yml up -d caddy
-# or, if the caddy container is already running:
-docker compose -f docker-compose.yml -f docker-compose.production.yml exec caddy caddy reload
+caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+systemctl reload caddy
 ```
 
-## 6. Deploy this site
+## 5. Deploy this site
 
 From this repo (`R:\givey.zip`) on your workstation:
 

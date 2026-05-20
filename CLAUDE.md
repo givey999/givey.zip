@@ -76,7 +76,7 @@ The live Discord presence works only if the Discord user ID (from `config.js`) h
 
 ### Deployment
 
-Hosted on the same DigitalOcean droplet as **donuttrade** (see `R:\donuttrade`), served by the existing Caddy container. The changes required on the donuttrade side (new Caddy site block + one bind-mount line in `docker-compose.production.yml`) are documented in `docs/hosting-setup.md`. Only touch those files in the donuttrade repo — this repo is pure static content. Deploy is `rsync` to `/srv/givey/` on the droplet.
+Hosted on a single DigitalOcean droplet, served by **Caddy running natively** as a systemd service — config is the plain file `/etc/caddy/Caddyfile` on the droplet (not in this repo, not in Docker). The same Caddy also serves `dst.givey.zip` and `omu.givey.zip`. donuttrade used to share this droplet via a Docker stack but has been decommissioned (no more Docker, and `R:\donuttrade` is gone). This repo is pure static content; deploy is `rsync` to `/srv/givey/` on the droplet. Caddy site block, cache headers, and the validate-then-`systemctl reload caddy` flow are documented in `docs/hosting-setup.md`.
 
 ## Conventions specific to this repo
 
