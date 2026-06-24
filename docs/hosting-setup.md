@@ -87,12 +87,28 @@ systemctl reload caddy
 
 ## 5. Deploy this site
 
-From this repo (`R:\givey.zip`) on your workstation:
+**From PowerShell (Windows — recommended):**
+
+```powershell
+.\scripts\deploy.ps1
+```
+
+Defaults to `root@167.172.105.211`. Override with env vars if needed:
+
+```powershell
+$env:DEPLOY_USER = 'root'; $env:DEPLOY_HOST = '167.172.105.211'; .\scripts\deploy.ps1
+```
+
+The script calls `wsl -e rsync` internally — no need to open a WSL shell, but WSL must be installed. The SSH passphrase prompt appears in your PowerShell window. To cache it for the session, run once in WSL beforehand: `eval "$(ssh-agent -s)" && ssh-add`.
+
+**From a WSL / Linux shell:**
 
 ```bash
-export DEPLOY_USER=<droplet ssh user>
-export DEPLOY_HOST=<droplet hostname or IP>
+export DEPLOY_USER=root
+export DEPLOY_HOST=167.172.105.211
 ./scripts/deploy.sh
 ```
+
+After rsync finishes, changes are live immediately — static files served by native Caddy, **no reload needed**.
 
 Then visit `https://givey.zip` — should load with a valid cert.

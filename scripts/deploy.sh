@@ -18,4 +18,4 @@ rsync -avz --delete \
   ./ "${DEPLOY_USER}@${DEPLOY_HOST}:/srv/givey/"
 
 echo "✓ deployed to ${DEPLOY_HOST}:/srv/givey/"
-echo "  (if first deploy, reload caddy: docker compose -f docker-compose.yml -f docker-compose.production.yml exec caddy caddy reload)"
+echo "  (static files served by native Caddy — no reload needed)"

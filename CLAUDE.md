@@ -13,9 +13,20 @@ The original page owner is the same person using this repo. That matters because
 ```bash
 npm run dev             # local dev server at http://localhost:8080
                         # via `npx --yes serve@latest -l 8080` — no deps installed
-./scripts/deploy.sh     # rsync to the production droplet
-                        # needs DEPLOY_USER + DEPLOY_HOST env vars
 ```
+
+**Deploy (Windows — PowerShell):**
+```powershell
+.\scripts\deploy.ps1    # rsync to the production droplet via WSL
+                        # DEPLOY_USER / DEPLOY_HOST env vars optional (defaults: root / 167.172.105.211)
+```
+
+**Deploy (Linux / WSL shell):**
+```bash
+./scripts/deploy.sh     # needs DEPLOY_USER + DEPLOY_HOST env vars
+```
+
+> SSH key has a passphrase — run in a real interactive terminal (not Claude's tools). The PowerShell script calls `wsl -e rsync` so no WSL shell needed. After sync, changes are live immediately — static files, native Caddy, no reload needed.
 
 There are **no tests**, no lint config, no typecheck. Verification is visual: open the site locally, click the splash, look at it. When the reference screenshots in `reference/` disagree with what's on screen, the site is wrong.
 
