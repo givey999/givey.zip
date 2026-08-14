@@ -36,6 +36,18 @@ export const projects = [
     thumbnail: null,
   },
   {
+    id: 'first-personal',
+    title: 'my small game',
+    name: 'my small game',
+    description: 'A Roblox game I built from scratch — server-authoritative economy with a shop, gear, a coin pad, and a donation statue.',
+    details:
+      "A Roblox game I scripted entirely myself to show what I can build in this space. Server-authoritative throughout: a coin pad awards currency (the client can only step on it, never fake the payout), a shop sells speed boosts and real Roblox gear, and a frozen avatar statue takes donations. Player data — coins and owned items — is session-locked and persisted so it survives respawns, rejoins, and server restarts.",
+    tech: ['Luau', 'Roblox'],
+    url: 'https://www.roblox.com/games/95205999822215/A-simple-game',
+    github: null,
+    thumbnail: null,
+  },
+  {
     id: 'givey-zip',
     title: 'givey.zip',
     description: 'This site. Static HTML/CSS/ESM JavaScript, no framework, card-flip projects view, live Discord presence, random theme pairs per load.',
