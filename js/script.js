@@ -1,6 +1,6 @@
 import { pickRandom, themePaths } from './themes.js'
 import { pickRandom as pickPfp, pfpPaths } from './pfps.js'
-import { SOCIALS, BIO_TEXT, DISCORD_ID, ABOUT } from './config.js'
+import { SOCIALS, BIO_TEXT, DISCORD_ID, DISCORD_SUSPENDED, DISCORD_NEW_ID, DISCORD_NEW_NAME, ABOUT } from './config.js'
 import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
 import { initPlayer } from './player.js'
@@ -44,7 +44,7 @@ function renderSocials() {
 function renderProjects() {
   const host = document.querySelector('.projects-list')
   const tiles = projects
-    .filter((p) => p.id !== 'givey-zip')
+    .filter((p) => p.id !== 'givey-zip' && p.id !== 'first-personal')
     .map((p) => `
       <a class="project-tile" href="${p.url}" target="_blank" rel="noopener noreferrer">
         <span class="project-tile-title">${p.title}</span>
@@ -84,8 +84,10 @@ function revealApp() {
   const playerHost = document.querySelector('.music-player')
   initPlayer(audio, { host: playerHost, title: theme.title })
 
-  const discordHost = document.querySelector('.discord-card')
-  initDiscord(discordHost, DISCORD_ID)
+  const oldDiscord = document.querySelector('.discord-card[data-account="old"]')
+  const newDiscord = document.querySelector('.discord-card[data-account="new"]')
+  initDiscord(oldDiscord, DISCORD_ID, { suspended: DISCORD_SUSPENDED, name: 'givey' })
+  initDiscord(newDiscord, DISCORD_NEW_ID, { name: DISCORD_NEW_NAME })
 
   const stack = document.querySelector('.card-stack')
   const tiltGroup = document.querySelector('.tilt-group')

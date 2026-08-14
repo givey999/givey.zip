@@ -9,10 +9,18 @@ const STATUS_COLORS = {
   offline: '#80848e',
 }
 
+// Snowflakes are 19 digits — past Number.MAX_SAFE_INTEGER, and `>>` truncates to
+// int32 — so the default-avatar index has to be computed with BigInt.
+function defaultAvatarUrl(id) {
+  let index = 0
+  try { index = Number((BigInt(id) >> 22n) % 6n) } catch { /* keep 0 */ }
+  return `https://cdn.discordapp.com/embed/avatars/${index}.png`
+}
+
 function avatarUrl(user) {
   if (!user) return ''
   if (user.avatar) return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=128`
-  return `https://cdn.discordapp.com/embed/avatars/${(parseInt(user.id) >> 22) % 6}.png`
+  return defaultAvatarUrl(user.id)
 }
 
 function activityLine(data) {
@@ -33,10 +41,22 @@ function renderStatic(host, userId, avatar, tag) {
   host.innerHTML = `
     <img class="discord-avatar" src="${avatar}" alt="${tag}" />
     <div class="discord-text">
-      <div class="discord-tag"><span class="discord-dot" style="background:${STATUS_COLORS.offline}"></span>${tag}</div>
+      <div class="discord-tag"><span class="discord-dot" style="--dot:${STATUS_COLORS.offline}"></span>${tag}</div>
       <div class="discord-activity">offline</div>
     </div>
     <a class="discord-button" href="https://discord.com/users/${userId}" target="_blank" rel="noopener noreferrer">Add on Discord</a>
+  `
+}
+
+function renderSuspended(host, avatar, tag) {
+  host.dataset.state = 'suspended'
+  host.innerHTML = `
+    <img class="discord-avatar" src="${avatar}" alt="${tag}" />
+    <div class="discord-text">
+      <div class="discord-tag"><span class="discord-dot" style="--dot:${STATUS_COLORS.offline}"></span>${tag}</div>
+      <div class="discord-activity">account unavailable</div>
+    </div>
+    <div class="discord-suspended" role="status">temporarily suspended</div>
   `
 }
 
@@ -51,14 +71,21 @@ function renderLive(host, userId, data) {
   host.innerHTML = `
     <img class="discord-avatar" src="${avatarUrl(user)}" alt="${tag}" />
     <div class="discord-text">
-      <div class="discord-tag"><span class="discord-dot" style="background:${color}"></span>${tag}</div>
+      <div class="discord-tag"><span class="discord-dot" style="--dot:${color}"></span>${tag}</div>
       <div class="discord-activity">${activity || status}</div>
     </div>
     <a class="discord-button" href="https://discord.com/users/${userId}" target="_blank" rel="noopener noreferrer">Add on Discord</a>
   `
 }
 
-export function initDiscord(host, userId) {
+export function initDiscord(host, userId, { suspended = false, name = 'givey' } = {}) {
+  // A suspended account never shows up in Lanyard — skip the socket entirely
+  // instead of burning the 3s INIT timeout on every page load.
+  if (suspended) {
+    renderSuspended(host, defaultAvatarUrl(userId), name)
+    return
+  }
+
   let ws = null
   let heartbeat = null
   let attempts = 0
@@ -69,7 +96,7 @@ export function initDiscord(host, userId) {
   function showFallback() {
     if (fallbackShown) return
     fallbackShown = true
-    renderStatic(host, userId, `https://cdn.discordapp.com/embed/avatars/0.png`, 'givey')
+    renderStatic(host, userId, defaultAvatarUrl(userId), name)
   }
 
   initTimer = setTimeout(() => { if (!gotInit) showFallback() }, INIT_TIMEOUT_MS)
@@ -91,11 +118,18 @@ export function initDiscord(host, userId) {
       } else if (msg.op === 0) {
         // EVENT
         if (msg.t === 'INIT_STATE' || msg.t === 'PRESENCE_UPDATE') {
+          // Lanyard accepts a subscription for any snowflake and answers with an
+          // empty payload when the account hasn't joined the Lanyard server.
+          // Without this guard that renders as an "unknown" user with no avatar.
+          if (!msg.d?.discord_user) {
+            clearTimeout(initTimer)
+            showFallback()
+            return
+          }
           gotInit = true
           fallbackShown = false
           clearTimeout(initTimer)
-          const data = msg.t === 'INIT_STATE' ? msg.d : msg.d
-          renderLive(host, userId, data)
+          renderLive(host, userId, msg.d)
         }
       }
     })

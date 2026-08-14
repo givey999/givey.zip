@@ -9,6 +9,14 @@ export const SOCIALS = [
 
 export const DISCORD_ID = '934479569539444786'
 
+// Old account is suspended — keep the card on the page but stamp it.
+// Set to false once the account is back; the card goes live again on its own.
+export const DISCORD_SUSPENDED = true
+
+// Current account — rendered as a second, live card below the suspended one.
+export const DISCORD_NEW_ID = '1277985517887160394'
+export const DISCORD_NEW_NAME = 'fakegivey'
+
 export const BIO_TEXT = 'wanna be web developer'
 
 // Edit these paragraphs to change the "about" panel on the card back.

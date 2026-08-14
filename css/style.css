@@ -440,6 +440,7 @@ body {
 /* ---- discord card ---- */
 
 .discord-card {
+  position: relative;   /* anchor for the suspended overlay */
   display: flex;
   align-items: center;
   gap: 12px;
@@ -483,7 +484,10 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  box-shadow: 0 0 6px currentColor;
+  /* --dot is set inline per status; currentColor here would glow the tag's
+     green through an offline (grey) dot and fake an "online" look. */
+  background: var(--dot, #80848e);
+  box-shadow: 0 0 6px var(--dot, #80848e);
 }
 
 .discord-activity {
@@ -511,6 +515,45 @@ body {
   background: rgba(116, 0, 14, 0.35);
   border-color: var(--accent);
   box-shadow: 0 0 12px rgba(116, 0, 14, 0.7);
+}
+
+/* ---- suspended account stamp ---- */
+
+/* The old account stays on the card, dimmed, with the notice glowing over it. */
+.discord-card[data-state='suspended'] .discord-avatar,
+.discord-card[data-state='suspended'] .discord-text {
+  filter: grayscale(1);
+  opacity: 0.22;
+}
+
+.discord-suspended {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* scrim keeps the notice legible over the dimmed profile underneath */
+  background: rgba(8, 0, 2, 0.45);
+  border-radius: inherit;
+  pointer-events: none;   /* never swallow clicks meant for the card */
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ff3b47;
+  text-shadow:
+    0 0 4px rgba(255, 59, 71, 0.9),
+    0 0 12px rgba(255, 59, 71, 0.6),
+    0 0 26px rgba(255, 0, 20, 0.45);
+  animation: suspended-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes suspended-glow {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.68; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discord-suspended { animation: none; }
 }
 
 /* ---- projects card ---- */
