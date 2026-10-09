@@ -48,18 +48,6 @@ function renderStatic(host, userId, avatar, tag) {
   `
 }
 
-function renderSuspended(host, avatar, tag) {
-  host.dataset.state = 'suspended'
-  host.innerHTML = `
-    <img class="discord-avatar" src="${avatar}" alt="${tag}" />
-    <div class="discord-text">
-      <div class="discord-tag"><span class="discord-dot" style="--dot:${STATUS_COLORS.offline}"></span>${tag}</div>
-      <div class="discord-activity">account unavailable</div>
-    </div>
-    <div class="discord-suspended" role="status">temporarily suspended</div>
-  `
-}
-
 function renderLive(host, userId, data) {
   host.dataset.state = 'live'
   const user = data.discord_user
@@ -78,14 +66,7 @@ function renderLive(host, userId, data) {
   `
 }
 
-export function initDiscord(host, userId, { suspended = false, name = 'givey' } = {}) {
-  // A suspended account never shows up in Lanyard — skip the socket entirely
-  // instead of burning the 3s INIT timeout on every page load.
-  if (suspended) {
-    renderSuspended(host, defaultAvatarUrl(userId), name)
-    return
-  }
-
+export function initDiscord(host, userId, { name = 'givey' } = {}) {
   let ws = null
   let heartbeat = null
   let attempts = 0

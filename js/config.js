@@ -1,21 +1,13 @@
 export const SOCIALS = [
   { name: 'Instagram', url: 'https://www.instagram.com/afk.luca/' },
   { name: 'Steam',     url: 'https://steamcommunity.com/id/givey02/' },
-  { name: 'Shop',      url: 'https://www.acbuy.com/login?loginStatus=register&code=VF6GLN' },
-  { name: 'Roblox',    url: 'https://www.roblox.com/users/1621884135/profile' },
+  { name: 'TikTok',    url: 'https://www.tiktok.com/@givey420' },
   { name: 'NameMC',    url: 'https://namemc.com/profile/givey02.1' },
   { name: 'GitHub',    url: 'https://github.com/givey999' },
 ]
 
-export const DISCORD_ID = '934479569539444786'
-
-// Old account is suspended — keep the card on the page but stamp it.
-// Set to false once the account is back; the card goes live again on its own.
-export const DISCORD_SUSPENDED = true
-
-// Current account — rendered as a second, live card below the suspended one.
-export const DISCORD_NEW_ID = '1277985517887160394'
-export const DISCORD_NEW_NAME = 'fakegivey'
+export const DISCORD_ID = '1277985517887160394'
+export const DISCORD_NAME = 'fakegivey'
 
 export const BIO_TEXT = 'wanna be web developer'
 

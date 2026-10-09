@@ -1,6 +1,6 @@
 import { pickRandom, themePaths } from './themes.js'
 import { pickRandom as pickPfp, pfpPaths } from './pfps.js'
-import { SOCIALS, BIO_TEXT, DISCORD_ID, DISCORD_SUSPENDED, DISCORD_NEW_ID, DISCORD_NEW_NAME, ABOUT } from './config.js'
+import { SOCIALS, BIO_TEXT, DISCORD_ID, DISCORD_NAME, ABOUT } from './config.js'
 import { getIcon } from './icons.js'
 import { initTypewriter } from './typewriter.js'
 import { initPlayer } from './player.js'
@@ -84,10 +84,8 @@ function revealApp() {
   const playerHost = document.querySelector('.music-player')
   initPlayer(audio, { host: playerHost, title: theme.title })
 
-  const oldDiscord = document.querySelector('.discord-card[data-account="old"]')
-  const newDiscord = document.querySelector('.discord-card[data-account="new"]')
-  initDiscord(oldDiscord, DISCORD_ID, { suspended: DISCORD_SUSPENDED, name: 'givey' })
-  initDiscord(newDiscord, DISCORD_NEW_ID, { name: DISCORD_NEW_NAME })
+  const discordHost = document.querySelector('.discord-card')
+  initDiscord(discordHost, DISCORD_ID, { name: DISCORD_NAME })
 
   const stack = document.querySelector('.card-stack')
   const tiltGroup = document.querySelector('.tilt-group')

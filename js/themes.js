@@ -5,7 +5,7 @@ export const themes = [
   { id: 'miss the rage',       title: 'miss the rage' },
   { id: 'if looks could kill', title: 'if looks could kill' },
   { id: 'astro',               title: 'astro' },
-  { id: 'klyn',                title: 'klyn' },
+  { id: 'on tha line',         title: 'on tha line' },
 ]
 
 export function themePaths(theme) {

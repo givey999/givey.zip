@@ -1,6 +1,7 @@
 export const pfps = [
   { id: 'pair1', pfpExt: 'jpg', bannerExt: 'gif' },
   { id: 'pair2', pfpExt: 'jpg', bannerExt: 'jpg' },
+  { id: 'pair3', pfpExt: 'jpg', bannerExt: 'webp' },
 ]
 
 export function pfpPaths(pair) {
