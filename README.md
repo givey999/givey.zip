@@ -23,8 +23,12 @@ Opens at [http://localhost:8080](http://localhost:8080). No dependencies to inst
 
 ## Deploy
 
+```powershell
+.\scripts\deploy.ps1    # Windows: rsync via WSL using the restricted deploy key
+```
+
 ```bash
-DEPLOY_USER=your-user DEPLOY_HOST=your-host ./scripts/deploy.sh
+DEPLOY_USER=your-user DEPLOY_HOST=your-host ./scripts/deploy.sh    # Linux / WSL
 ```
 
 See [docs/hosting-setup.md](docs/hosting-setup.md) for full droplet/Caddy/DNS setup.

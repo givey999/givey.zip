@@ -85,7 +85,35 @@ caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 systemctl reload caddy
 ```
 
-## 5. Deploy this site
+## 5. Deploy key (one-time)
+
+Deploys use a dedicated key that has **no passphrase**, so Claude Code can deploy
+on its own. The server locks the key to `rrsync`, so it can only sync files into
+`/srv/givey`. It can't get a shell, forward ports, or reach anything else on the
+droplet. The main `~/.ssh/id_ed25519` key logs in as root, so it keeps its
+passphrase and is only used for server admin.
+
+In WSL, generate the key:
+
+```bash
+ssh-keygen -t ed25519 -N "" -C "givey-deploy" -f ~/.ssh/givey_deploy
+cat ~/.ssh/givey_deploy.pub
+```
+
+On the droplet (log in with the main key), check where `rrsync` is installed
+(`/usr/bin/rrsync` on Ubuntu 24.04, from the `rsync` package), then authorize the key:
+
+```bash
+command -v rrsync
+echo 'command="/usr/bin/rrsync /srv/givey",restrict <contents of givey_deploy.pub>' >> ~/.ssh/authorized_keys
+```
+
+Because of `rrsync`, remote paths for this key are relative to `/srv/givey`.
+The deploy target is `root@host:` (empty path) and not `root@host:/srv/givey/`.
+
+To revoke the key, delete its `givey-deploy` line from `/root/.ssh/authorized_keys`.
+
+## 6. Deploy this site
 
 **From PowerShell (Windows — recommended):**
 
@@ -99,9 +127,11 @@ Defaults to `root@167.172.105.211`. Override with env vars if needed:
 $env:DEPLOY_USER = 'root'; $env:DEPLOY_HOST = '167.172.105.211'; .\scripts\deploy.ps1
 ```
 
-The script calls `wsl -e rsync` internally — no need to open a WSL shell, but WSL must be installed. The SSH passphrase prompt appears in your PowerShell window. To cache it for the session, run once in WSL beforehand: `eval "$(ssh-agent -s)" && ssh-add`.
+The script calls `wsl -e rsync` internally. You don't need to open a WSL shell, but WSL must be installed. It uses the deploy key from step 5 in batch mode, so nothing prompts for input and Claude Code can run it directly. Don't run it from Git Bash: Git Bash rewrites the `/mnt/...` path, and rsync then fails with "source and destination cannot both be remote".
 
-**From a WSL / Linux shell:**
+To preview changes without deploying, run `.\scripts\deploy.ps1 -DryRun`.
+
+**From a WSL / Linux shell (manual fallback, uses the main key + passphrase):**
 
 ```bash
 export DEPLOY_USER=root

@@ -26,7 +26,7 @@ npm run dev             # local dev server at http://localhost:8080
 ./scripts/deploy.sh     # needs DEPLOY_USER + DEPLOY_HOST env vars
 ```
 
-> SSH key has a passphrase — run in a real interactive terminal (not Claude's tools). The PowerShell script calls `wsl -e rsync` so no WSL shell needed. After sync, changes are live immediately — static files, native Caddy, no reload needed.
+> `deploy.ps1` uses the WSL key `~/.ssh/givey_deploy`. It has no passphrase, so Claude can run it directly, but the server locks it to `rrsync /srv/givey`, so it can only sync files (no shell). Run it from PowerShell, not Git Bash, because Git Bash rewrites the `/mnt/...` path. The main `id_ed25519` root key keeps its passphrase and is only for manual server admin. After sync, changes are live immediately — static files, native Caddy, no reload needed.
 
 There are **no tests**, no lint config, no typecheck. Verification is visual: open the site locally, click the splash, look at it. When the reference screenshots in `reference/` disagree with what's on screen, the site is wrong.
 
